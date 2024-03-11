@@ -1,7 +1,7 @@
 package med.voll.api.domain.consulta;
 
 
-import med.voll.api.domain.consulta.desafio.ValidadorCancelamientoDeConsulta;
+import med.voll.api.domain.consulta.validacionesCancelamiento.ValidadorCancelamientoDeConsulta;
 import med.voll.api.domain.consulta.validaciones.ValidadorDeConsultas;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;

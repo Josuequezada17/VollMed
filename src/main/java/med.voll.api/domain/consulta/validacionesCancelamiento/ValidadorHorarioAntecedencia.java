@@ -1,4 +1,4 @@
-package med.voll.api.domain.consulta.desafio;
+package med.voll.api.domain.consulta.validacionesCancelamiento;
 
 import jakarta.validation.ValidationException;
 import med.voll.api.domain.consulta.DatosCancelamientoConsulta;

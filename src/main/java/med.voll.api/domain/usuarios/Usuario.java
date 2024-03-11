@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import med.voll.api.autenticable.Autenticable;
+import med.voll.api.domain.medico.Especialidad;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,10 +27,13 @@ public class Usuario implements UserDetails {
     private Long id;
     private String login;
     private String clave;
+    @Enumerated(EnumType.STRING)
+    private TipoDeUsuario tipoDeUsuario;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        System.out.println("tipo de usuario: " + getTipoDeUsuario().name());
+        return List.of(new SimpleGrantedAuthority(getTipoDeUsuario().name()));
     }
 
     @Override
