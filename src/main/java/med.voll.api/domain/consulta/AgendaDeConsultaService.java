@@ -67,7 +67,6 @@ public class AgendaDeConsultaService {
         validadoresCancelamiento.forEach(v -> v.validar(datos));
 
         var consulta = consultaRepository.getReferenceById(datos.idConsulta());
-        consulta.cancelar(datos.motivo());
     }
 
     private Medico seleccionarMedico(DatosAgendarConsulta datos) {

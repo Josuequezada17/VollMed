@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/vollmed_api_test?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
-    password: ajql342f
+    password: keep6xan
 
 
  ## spring.datasource.url=jdbc:h2:mem:testdb
