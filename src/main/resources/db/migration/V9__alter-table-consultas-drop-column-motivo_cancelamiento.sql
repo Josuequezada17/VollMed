@@ -1,1 +1,0 @@
-alter table consultas drop column motivo_cancelamiento;
