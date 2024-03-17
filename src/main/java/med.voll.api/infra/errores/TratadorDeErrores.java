@@ -10,6 +10,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 public class TratadorDeErrores {
@@ -27,9 +31,14 @@ public class TratadorDeErrores {
         return ResponseEntity.badRequest().body(errores);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity tratarError401(){return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();}
+    @ExceptionHandler(HttpClientErrorException.Forbidden.class)
+    public ResponseEntity<Object> tratarError403() {
+        Map<String, String> body = new HashMap<>();
+        body.put("error", "Acceso no autorizado");
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(body);
+    }
 
     @ExceptionHandler(ValidacionDeIntegridad.class)
     public ResponseEntity errorHandlerValidacionesIntegridad(Exception e) {

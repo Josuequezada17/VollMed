@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -86,5 +87,9 @@ public class AgendaDeConsultaService {
         if (consultaRepository.existsById(aLong)) {
             consultaRepository.deleteById(aLong);
         }
+    }
+
+    public Page<DatosDetalleConsulta> consultarPorId(Long id, Pageable paginacion) {
+        return consultaRepository.findAllById(paginacion, id).map(DatosDetalleConsulta::new);
     }
 }

@@ -27,9 +27,8 @@ public class SecurityConfigurations {
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Le indicamos a Spring el tipo de sesion
                 .and().authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/login/**").permitAll()
-                .requestMatchers("/consultas/**").hasAuthority("PACIENTE")
-                .requestMatchers("/consultas/**").hasAuthority("DOCTOR")
-                .requestMatchers("/pacientes/**", "/medicos/**", "/consultas/**").hasAuthority("ADMIN")
+                .requestMatchers("/consultas/**").hasAnyAuthority("PACIENTE", "DOCTOR", "ADMIN")
+                .requestMatchers("/pacientes/**", "/medicos/**").hasAuthority("ADMIN")
                 .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .and()
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

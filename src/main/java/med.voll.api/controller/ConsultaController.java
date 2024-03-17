@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @ResponseBody
 @RequestMapping("/consultas")
@@ -32,6 +34,12 @@ public class ConsultaController {
     public ResponseEntity<Page<DatosDetalleConsulta>> listar(@PageableDefault(size = 10, sort = {"fecha"}) Pageable paginacion) {
         var response = service.consultar(paginacion);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Obtiene el listado de consultas por id de paciente")
+    public ResponseEntity<Page<DatosDetalleConsulta>> listar(@PathVariable Long id, @PageableDefault(size = 10, sort = {"fecha"}) Pageable paginacion) {
+        return ResponseEntity.ok(service.consultarPorId(id, paginacion));
     }
 
     @PostMapping
