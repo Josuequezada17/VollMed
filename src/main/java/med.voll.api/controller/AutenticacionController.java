@@ -1,11 +1,9 @@
 package med.voll.api.controller;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import med.voll.api.domain.usuarios.DatosAutenticacionUsuario;
 import med.voll.api.domain.usuarios.Usuario;
-import med.voll.api.domain.usuarios.UsuarioAdmin;
 import med.voll.api.infra.security.DatosJWTToken;
 import med.voll.api.infra.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +27,16 @@ public class AutenticacionController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping
+    @PostMapping("/usuario")
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
         Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.login(),
                 datosAutenticacionUsuario.clave());
-        var usuarioAutenticado = authenticationManager.authenticate(authToken);
-        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
-        return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
-    }
 
-    @PostMapping("/admin")
-    public ResponseEntity autenticarUsuarioAdmin(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
-        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.login(),
-                datosAutenticacionUsuario.clave());
         var usuarioAutenticado = authenticationManager.authenticate(authToken);
-        var JWTtoken = tokenService.generarToken((UsuarioAdmin) usuarioAutenticado.getPrincipal());
+
+        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+
         return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
+
     }
 }

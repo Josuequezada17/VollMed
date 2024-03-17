@@ -1,8 +1,8 @@
 package med.voll.api.domain.consulta.desafio;
 
 import jakarta.validation.ValidationException;
-import med.voll.api.domain.consulta.DatosCancelamientoConsulta;
 import med.voll.api.domain.consulta.ConsultaRepository;
+import med.voll.api.domain.consulta.DatosCancelamientoConsulta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

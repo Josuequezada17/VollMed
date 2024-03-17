@@ -4,10 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import med.voll.api.domain.usuarios.UsuarioAdminRepository;
 import med.voll.api.domain.usuarios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,8 +20,6 @@ public class SecurityFilter extends OncePerRequestFilter {
     private TokenService tokenService;
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private UsuarioAdminRepository usuarioAdminRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -35,15 +31,10 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (nombreUsuario != null) {
                 // Token valido
                 var usuario = usuarioRepository.findByLogin(nombreUsuario);
-                var usuarioAdmin = usuarioAdminRepository.findByLogin(nombreUsuario);
 
                 var authentication = new UsernamePasswordAuthenticationToken(usuario, null,
                         usuario.getAuthorities()); // Forzamos un inicio de sesion
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                var authenticationAdmin = new UsernamePasswordAuthenticationToken(usuarioAdmin, null,
-                        usuarioAdmin.getAuthorities()); // Forzamos un inicio de sesion
-                SecurityContextHolder.getContext().setAuthentication(authenticationAdmin);
             }
         }
         filterChain.doFilter(request, response);

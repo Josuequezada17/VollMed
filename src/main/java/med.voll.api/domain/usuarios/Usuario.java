@@ -30,9 +30,13 @@ public class Usuario implements UserDetails {
     @OneToOne
     private Paciente idPaciente;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn(name = "id")
+    private Role idRole;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USUARIO"));
+        return List.of(new SimpleGrantedAuthority(idRole.getNombre()));
     }
 
     @Override

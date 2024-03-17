@@ -2,10 +2,6 @@ package med.voll.api.domain.medico;
 
 import med.voll.api.domain.consulta.Consulta;
 import med.voll.api.domain.direccion.DatosDireccion;
-import med.voll.api.domain.medico.DatosRegistroMedico;
-import med.voll.api.domain.medico.Especialidad;
-import med.voll.api.domain.medico.Medico;
-import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.DatosRegistroPaciente;
 import med.voll.api.domain.paciente.Paciente;
 import org.junit.jupiter.api.DisplayName;
@@ -40,14 +36,14 @@ class MedicoRepositoryTest {
         //given
         var proximoLunes10H = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
-                .atTime(10,0);
+                .atTime(10, 0);
 
-        var medico=registrarMedico("Jose","j@mail.com","123456", Especialidad.CARDIOLOGIA);
-        var paciente= registrarPaciente("antonio","a@mail.com","654321");
-        registrarConsulta(medico,paciente,proximoLunes10H);
+        var medico = registrarMedico("Jose", "j@mail.com", "123456", Especialidad.CARDIOLOGIA);
+        var paciente = registrarPaciente("antonio", "a@mail.com", "654321");
+        registrarConsulta(medico, paciente, proximoLunes10H);
 
         //when
-        var medicoLibre = medicoRepository.seleccionarMedicoConEspecialidadEnFecha(Especialidad.CARDIOLOGIA,proximoLunes10H);
+        var medicoLibre = medicoRepository.seleccionarMedicoConEspecialidadEnFecha(Especialidad.CARDIOLOGIA, proximoLunes10H);
 
         //then
         assertThat(medicoLibre).isNull();
@@ -60,12 +56,12 @@ class MedicoRepositoryTest {
         //given
         var proximoLunes10H = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
-                .atTime(10,0);
+                .atTime(10, 0);
 
-        var medico=registrarMedico("Jose","j@mail.com","123456",Especialidad.CARDIOLOGIA);
+        var medico = registrarMedico("Jose", "j@mail.com", "123456", Especialidad.CARDIOLOGIA);
 
         //when
-        var medicoLibre = medicoRepository.seleccionarMedicoConEspecialidadEnFecha(Especialidad.CARDIOLOGIA,proximoLunes10H);
+        var medicoLibre = medicoRepository.seleccionarMedicoConEspecialidadEnFecha(Especialidad.CARDIOLOGIA, proximoLunes10H);
 
         //then
         assertThat(medicoLibre).isEqualTo(medico);
