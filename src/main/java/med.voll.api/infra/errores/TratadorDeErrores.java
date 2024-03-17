@@ -32,12 +32,8 @@ public class TratadorDeErrores {
     }
 
     @ExceptionHandler(HttpClientErrorException.Forbidden.class)
-    public ResponseEntity<Object> tratarError403() {
-        Map<String, String> body = new HashMap<>();
-        body.put("error", "Acceso no autorizado");
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body(body);
+    public ResponseEntity tratarError403() {
+       return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acceso no autorizado");
     }
 
     @ExceptionHandler(ValidacionDeIntegridad.class)
