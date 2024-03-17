@@ -1,5 +1,7 @@
 package med.voll.api.usuarios;
 
+import med.voll.api.domain.consulta.DatosDetalleConsulta;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,16 +22,26 @@ public class SeguridadEndpointTest {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    public void cuandoAccedeAdmin_entoncesPermitido() throws Exception {
+    @WithMockUser(authorities = "ADMIN")
+    @DisplayName("Acceso de admin autorizado")
+    public void adminObteniendoPacientes() throws Exception {
         mockMvc.perform(get("/pacientes"))
                 .andReturn().getResponse();
     }
 
     @Test
-    @WithMockUser(roles = "USER")
-    public void cuandoAccedeUsuario_entoncesDenegado() throws Exception {
+    @WithMockUser(authorities = "PACIENTE")
+    @DisplayName("Acceso de paciente no autorizado")
+    public void pacienteObteniendoPacientes() throws Exception {
         mockMvc.perform(get("/pacientes"))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = "PACIENTE")
+    @DisplayName("Acceso de paciente autorizado")
+    public void pacienteObteniendoConsultas() throws Exception {
+        mockMvc.perform(get("/consultas"))
+                .andExpect(status().isOk());
     }
 }
