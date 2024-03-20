@@ -19,5 +19,7 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Long> {
 
     void delete(Consulta consulta);
 
+    void deleteById(Long id);
+
     Page<Consulta> findAllById(Pageable paginacion, Long id);
 }

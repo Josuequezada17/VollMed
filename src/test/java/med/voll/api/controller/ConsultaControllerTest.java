@@ -47,7 +47,7 @@ class ConsultaControllerTest {
 
     @Test
     @DisplayName("deberia retornar estado http 400 cuando los datos ingresados sean invalidos")
-    @WithMockUser
+    @WithMockUser(authorities = "ADMIN")
     void agendarEscenario1() throws Exception {
         //given //when
         var response = mvc.perform(post("/consultas")).andReturn().getResponse();
@@ -58,7 +58,7 @@ class ConsultaControllerTest {
 
     @Test
     @DisplayName("deberia retornar estado http 200 cuando los datos ingresados son validos")
-    @WithMockUser
+    @WithMockUser(authorities = "ADMIN")
     void agendarEscenario2() throws Exception {
         //given
         var fecha = LocalDateTime.now().plusHours(1);
